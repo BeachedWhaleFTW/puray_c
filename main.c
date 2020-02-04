@@ -1,7 +1,7 @@
-int main()
-{
-	return 1;
-}
+#include<stdio.h>
+
+#define WIDTH 800
+#define HEIGHT 600
 
 typedef struct
 {
@@ -53,8 +53,29 @@ void saveppm(char *filename, unsigned char *img, int width, int height)
 
 	f = fopen(filename, "wb");
 
-	fprintf(f, "R6 %d %d %d\n", width, height, 255);
+	fprintf(f, "P6 %d %d %d\n", width, height, 255);
 	fwrite(img, 3, width*height, f);
 
 	fclose(f);
+}
+
+int main(int argc, char *argv[])
+{
+	unsigned char img[WIDTH * HEIGHT * 3];
+	int i,j;
+
+	for(i=0; i<HEIGHT; i++)
+	{
+		for(j=0; j<WIDTH; j++)
+		{
+			img[(j + i*WIDTH) * 3 + 0] = 255;
+			img[(j + i*WIDTH) * 3 + 1] = 255;
+			img[(j + i*WIDTH) * 3 + 2] = 0;
+			
+		}
+	}
+
+	saveppm("test_image.ppm", img, WIDTH, HEIGHT);
+
+	return 0;
 }
