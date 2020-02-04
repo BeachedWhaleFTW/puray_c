@@ -46,3 +46,15 @@ int intersectRaySphere(ray *r, sphere *s)
 	else
 		return 0;
 }
+
+void saveppm(char *filename, unsigned char *img, int width, int height)
+{
+	FILE *f;
+
+	f = fopen(filename, "wb");
+
+	fprintf(f, "R6 %d %d %d\n", width, height, 255);
+	fwrite(img, 3, width*height, f);
+
+	fclose(f);
+}
